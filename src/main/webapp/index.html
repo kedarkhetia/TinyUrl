@@ -26,7 +26,8 @@
 	    	$(document).ready(function () {
 	    		$("#submitButton").on("click", function() {
 	    			var urlForm = document.getElementById("urlForm");
-	        		var urlregex = new RegExp("(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?");
+	    			var re = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+	        		var urlregex = new RegExp(re);
 	        		if(!urlregex.test(urlForm.elements[0].value)) {
 	        	    	alert("Invalid URL!");
 	        	    	urlForm.onsubmit = false;
