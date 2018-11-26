@@ -27,7 +27,10 @@ Request:
 }
 Response:
 {
-    "url": "short url"
+    "ok": "ture"/"false"
+    "url": {
+        "url": "short url"
+    }
 }
 ```
 3. POST /api/url/

@@ -39,8 +39,16 @@
 					type: 'GET',
 				})
 				.done(function(data) {
-					document.getElementById("shortUrl").innerHTML = data["url"];
-					document.getElementById("link").href = data["url"];
+					if(data["ok"] === "false") {
+						var elem = document.getElementById("shortUrl");
+						elem.style.color="red";
+						elem.innerHTML = "Some Error occured, Couldn't retrive generated TinyUrl!";
+						console.log('Err: ' + err.Message); 
+    				}
+    				else {
+    					document.getElementById("shortUrl").innerHTML = data["url"]["url"];
+    					document.getElementById("link").href = data["url"]["url"];
+    				}
 				})
 	    		.fail(function(data) {
 	    			var elem = document.getElementById("shortUrl");

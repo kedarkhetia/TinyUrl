@@ -26,13 +26,13 @@ public class URLCollection {
 		return new URL("http://" + InetAddress.getLocalHost().getHostName()+"/tinyurl/");
 	}
 	
-	public static URL getSortendUrl(URL bigUrl) throws UnknownHostException, SQLException {
-		String urlHead = "http://" + getInstanceName() + ":" + PORT + "/tinyurl/";
+	public static ResponseMessage getSortendUrl(URL bigUrl) throws UnknownHostException, SQLException {
+		String urlHead = "http://localhost:"+ PORT +"/tinyurl/";
 		String hash = DBManager.getInstance().getShort(bigUrl);
 		if(hash != null && !hash.isEmpty()) {
-			return new URL(urlHead + hash);
+			return new ResponseMessage(true, new URL(urlHead + hash));
 		}
-		return new URL(urlHead);
+		return new ResponseMessage(false, new URL(urlHead));
 	}
 	
 	public static ResponseMessage setUrlToMap(URL url) {
@@ -43,11 +43,11 @@ public class URLCollection {
 			String encodedUrl7char = encodedUrl.substring(encodedUrl.length() - 7);
 			DBManager manager = DBManager.getInstance();
 			String result = manager.getShort(url);
-			boolean res = false;
+			boolean res = true;
 			if(result == null || result.isEmpty()) {
 				res = manager.insert(url, encodedUrl7char);
 			}
-			return new ResponseMessage(res, new URL("http://" + getInstanceName() + ":" + PORT + "/tinyurl/" + encodedUrl7char));
+			return new ResponseMessage(true, new URL("http://localhost:" + PORT + "/tinyurl/" + encodedUrl7char));
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return new ResponseMessage(false, url);

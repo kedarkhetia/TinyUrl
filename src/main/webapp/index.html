@@ -48,8 +48,10 @@
 							elem.innerHTML = "Some Error occured, Couldn't generate TinyUrl!";
 		    				$("#urlForm").off("submit");
 	    				}
-	    				console.log(data["url"]["url"]);
-	    				$("#urlForm").submit();
+	    				else {
+	    					console.log(data["url"]["url"]);
+		    				$("#urlForm").submit();	
+	    				}
 	    			})
 	    			.fail(function(err) {
 	    				console.log("Err: " + err.Message)
