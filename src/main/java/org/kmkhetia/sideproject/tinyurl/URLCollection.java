@@ -27,7 +27,7 @@ public class URLCollection {
 	}
 	
 	public static ResponseMessage getSortendUrl(URL bigUrl) throws UnknownHostException, SQLException {
-		String urlHead = "http://localhost:"+ PORT +"/tinyurl/";
+		String urlHead = "http://" + getInstanceName() + ":" + PORT +"/tinyurl/";
 		String hash = DBManager.getInstance().getShort(bigUrl);
 		if(hash != null && !hash.isEmpty()) {
 			return new ResponseMessage(true, new URL(urlHead + hash));
@@ -47,7 +47,7 @@ public class URLCollection {
 			if(result == null || result.isEmpty()) {
 				res = manager.insert(url, encodedUrl7char);
 			}
-			return new ResponseMessage(true, new URL("http://localhost:" + PORT + "/tinyurl/" + encodedUrl7char));
+			return new ResponseMessage(true, new URL("http://" + getInstanceName() + ":" + PORT + "/tinyurl/" + encodedUrl7char));
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return new ResponseMessage(false, url);
