@@ -20,16 +20,16 @@
 	    <script>
 	    	$(document).ready(function () {
 	    		var getUrlParameter = function getUrlParameter(Param) {
-	    		    var PageURL = window.location.search.substring(1),
-	    		        URLVariables = PageURL.split('&'),
-	    		        ParameterName,
+	    		    var pageURL = window.location.search.substring(1),
+	    		        URLVariables = pageURL.split('&'),
+	    		        parameterName,
 	    		        i;
 	
 	    		    for (i = 0; i < URLVariables.length; i++) {
-	    		        ParameterName = URLVariables[i].split('=');
+	    		        parameterName = URLVariables[i].split('=');
 	
-	    		        if (ParameterName[0] === Param) {
-	    		            return ParameterName[1] === undefined ? true : ParameterName[1];
+	    		        if (parameterName[0] === Param) {
+	    		            return parameterName[1] === undefined ? true : parameterName[1];
 	    		        }
 	    		    }
 	    		};
@@ -37,17 +37,17 @@
 	    		$.ajax({
 					url: '/tinyurl/api/url?bigUrl='+ getUrlParameter("url"),
 					type: 'GET',
-					success: (data) => {
-						document.getElementById("shortUrl").innerHTML = data["url"];
-						document.getElementById("link").href = data["url"];
-					},
-					error: (req, err) => { 
-						var elem = document.getElementById("shortUrl");
-						elem.style.color="red";
-						elem.innerHTML = "Some Error occured, Couldn't generate TinyUrl!";
-						console.log('Err: ' + err.Message); 
-					}
-				});
+				})
+				.done(function(data) {
+					document.getElementById("shortUrl").innerHTML = data["url"];
+					document.getElementById("link").href = data["url"];
+				})
+	    		.fail(function(data) {
+	    			var elem = document.getElementById("shortUrl");
+					elem.style.color="red";
+					elem.innerHTML = "Some Error occured, Couldn't retrive generated TinyUrl!";
+					console.log('Err: ' + err.Message); 
+	    		})
 	    	});
 	    </script>
 	</body>

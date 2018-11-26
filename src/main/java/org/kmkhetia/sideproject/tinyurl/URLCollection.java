@@ -27,7 +27,7 @@ public class URLCollection {
 	}
 	
 	public static URL getSortendUrl(URL bigUrl) throws UnknownHostException, SQLException {
-		String urlHead = "http://" + getInstanceName() +":"+ PORT +"/tinyurl/";
+		String urlHead = "http://localhost:"+ PORT +"/tinyurl/";
 		String hash = DBManager.getInstance().getShort(bigUrl);
 		if(hash != null && !hash.isEmpty()) {
 			return new URL(urlHead + hash);

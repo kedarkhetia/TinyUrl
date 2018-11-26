@@ -18,6 +18,7 @@
 							<input type="text" id="url" name="url" class="form-control col-md-10" placeholder="Long Url..." />
 							<button type="submit" form="urlForm" value="Submit" id="submitButton" class="btn btn-outline-secondary col-md-2" type="button">Submit</button>
 						</div>
+						<span id="error"></span>
 				</form>
 	        </div>
 	    </div>
@@ -26,7 +27,6 @@
 	    		$("#submitButton").on("click", function() {
 	    			var urlForm = document.getElementById("urlForm");
 	        		var urlregex = new RegExp("(http|ftp|https)://([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?");
-	        	    console.log(urlregex.test(urlForm.elements[0].value));
 	        		if(!urlregex.test(urlForm.elements[0].value)) {
 	        	    	alert("Invalid URL!");
 	        	    	urlForm.onsubmit = false;
@@ -38,13 +38,26 @@
 	    					'Content-Type':'application/json; charset=utf-8'
 	    				},
 	    				type: 'POST',
-	    				data: JSON.stringify($("#urlForm").serializeJSON()),
-	    				success: (data) => {
-	    					console.log(data["url"]["url"]);
-	    				},
-	    				error: (err) => {console.log("Err: " + err.Message)}
+	    				data: JSON.stringify($("#urlForm").serializeJSON())
+	    			})
+	    			.done(function(data) {
+	    				if(data["ok"] === "false") {
+	    					var elem = document.getElementById("error");
+							elem.style.color="red";
+							elem.innerHTML = "Some Error occured, Couldn't generate TinyUrl!";
+		    				$("#urlForm").off("submit");
+	    				}
+	    				console.log(data["url"]["url"]);
+	    				$("#urlForm").submit();
+	    			})
+	    			.fail(function(err) {
+	    				console.log("Err: " + err.Message)
+	    				var elem = document.getElementById("error");
+						elem.style.color="red";
+						elem.innerHTML = "Some Error occured, Couldn't generate TinyUrl!";
+	    				$("#urlForm").off("submit");
 	    			});
-	    			return true;
+	    			return false;
 	    		})
 	    	});
 	    </script>
