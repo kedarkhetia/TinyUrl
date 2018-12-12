@@ -4,6 +4,12 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 
+/**
+ * This class represents URL Datatype of APIs.
+ * 
+ * @author Kedar M. Khetia
+ *
+ */
 public class URL {
 	private String url;
 	
@@ -29,6 +35,11 @@ public class URL {
 		return new URL(URLDecoder.decode(this.getUrl(), "UTF-8"));
 	}
 	
+	/**
+	 * Checks if two URLs are same or different.
+	 * 
+	 * @param url
+	 */
 	@Override
 	public boolean equals(Object url) {
 		if(url == this) {

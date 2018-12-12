@@ -13,6 +13,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+/**
+ * It is the root path where URLs are accessed.
+ * 
+ * @author Kedar M. Khetia
+ *
+ */
 @Path("/")
 public class Main {
 	

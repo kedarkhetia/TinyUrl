@@ -6,6 +6,12 @@ import java.io.InputStreamReader;
 
 import com.google.gson.Gson;
 
+/**
+ * The class represents the Config properties for the application.
+ * 
+ * @author Kedar M. Khetia
+ *
+ */
 public class Config {
 	private String dbHost;
 	private int dbPort;
@@ -18,6 +24,12 @@ public class Config {
 	
 	private Config() {}
 	
+	/**
+	 * It initializes the config file and
+	 * returns the instance of Config.
+	 * 
+	 * @return Config
+	 */
 	public static Config getInstance() {
 		if(config == null) {
 			Gson gson = new Gson();

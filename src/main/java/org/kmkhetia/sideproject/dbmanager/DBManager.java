@@ -9,17 +9,22 @@ import java.sql.SQLException;
 import org.kmkhetia.sideproject.model.Config;
 import org.kmkhetia.sideproject.model.URL;
 
+/**
+ * The Class manages communication of application with database system.
+ * 
+ * @author Kedar M. Khetia
+ *
+ */
 public class DBManager {
 	private static DBManager dbm;
 	private Config config;
 	private Connection con;
-	
+
 	private DBManager() throws SQLException {
 		this.config = Config.getInstance();
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String urlString = "jdbc:mysql://" + this.config.getDbHost() + 
@@ -36,6 +41,15 @@ public class DBManager {
 		return dbm;
 	}
 	
+	/**
+	 * This method will insert url and generated hash code
+	 * to the database table.
+	 * 
+	 * @param url
+	 * @param hash
+	 * @return
+	 * @throws SQLException
+	 */
 	public synchronized boolean insert(URL url, String hash) throws SQLException {
 		PreparedStatement insert = con.prepareStatement("INSERT INTO TinyUrl (LONGURL, HASH) VALUES (?, ?)");
 		insert.setString(1, url.getUrl());
@@ -43,6 +57,14 @@ public class DBManager {
 		return insert.execute();
 	}
 	
+	/**
+	 * The method will get the hash code of the
+	 * provided URL.
+	 * 
+	 * @param url
+	 * @return
+	 * @throws SQLException
+	 */
 	public String getShort(URL url) throws SQLException {
 		PreparedStatement getShort = con.prepareStatement("SELECT HASH FROM TinyUrl WHERE LONGURL=?");
 		getShort.setString(1, url.getUrl());
@@ -53,6 +75,14 @@ public class DBManager {
 		return result.getString("HASH");
 	}
 	
+	/**
+	 * The method will get the long URL from
+	 * provided short hashcode.
+	 * 
+	 * @param hash
+	 * @return
+	 * @throws SQLException
+	 */
 	public URL getLong(String hash) throws SQLException {
 		PreparedStatement getLong = con.prepareStatement("SELECT LONGURL FROM TinyUrl WHERE HASH=?");
 		getLong.setString(1, hash);

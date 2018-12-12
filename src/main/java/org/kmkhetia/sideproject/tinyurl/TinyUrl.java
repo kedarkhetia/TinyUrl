@@ -42,7 +42,7 @@ public class TinyUrl {
     @Produces(MediaType.APPLICATION_JSON)
     public ResponseMessage getUrl(@QueryParam("bigUrl") URL bigUrl) throws UnknownHostException, UnsupportedEncodingException, SQLException {
     	bigUrl.encodeUrl();
-    	return URLCollection.getSortendUrl(bigUrl);
+    	return URLCollection.getShortendUrl(bigUrl);
     }
 
 }
